@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - SmartSecure AI Fraud Detection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        
+        body {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            min-height: 100vh; color: #e8eef4;
+            background-attachment: fixed;
+        }
+        body::before {
+            content: '';
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at 80% 20%, rgba(123, 47, 247, 0.12) 0%, transparent 50%),
+                        radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 60% 60%, rgba(241, 7, 163, 0.06) 0%, transparent 40%);
+            pointer-events: none; z-index: 0;
+        }
+
+        nav {
+            position: sticky; top: 0; z-index: 100;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 48px;
+            background: linear-gradient(135deg, rgba(15, 12, 41, 0.95) 0%, rgba(48, 43, 99, 0.9) 100%);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+        nav .logo {
+            font-size: 24px; font-weight: 800;
+            background: linear-gradient(135deg, #00d4ff, #7b2ff7, #f107a3);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        nav a { color: rgba(255,255,255,0.7); text-decoration: none; margin-left: 32px; font-weight: 600; transition: 0.3s; }
+        nav a:hover { color: #00d4ff; text-shadow: 0 0 20px rgba(0, 212, 255, 0.5); }
+        nav a.active { color: #00d4ff; }
+
+        .container {
+            position: relative; z-index: 1;
+            max-width: 900px; margin: 0 auto; padding: 60px 24px;
+        }
+
+        .page-header { margin-bottom: 40px; }
+        .page-title {
+            font-size: 42px; font-weight: 800; margin-bottom: 16px;
+            background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.85) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .page-sub { color: rgba(255,255,255,0.6); font-size: 18px; line-height: 1.7; }
+
+        .card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.03) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px; padding: 32px;
+            margin-bottom: 24px;
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+            border-color: rgba(0, 212, 255, 0.2);
+        }
+        .card-icon {
+            width: 56px; height: 56px; border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; margin-bottom: 20px;
+        }
+        .card-icon.cyan { background: linear-gradient(135deg, #0066ff, #00d4ff); color: #fff; }
+        .card-icon.purple { background: linear-gradient(135deg, #7b2ff7, #a855f7); color: #fff; }
+        .card-icon.pink { background: linear-gradient(135deg, #f107a3, #ff6b9d); color: #fff; }
+        .card-icon.green { background: linear-gradient(135deg, #00b894, #00cec9); color: #fff; }
+
+        .card h2 {
+            font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 16px;
+        }
+        .card p { color: rgba(255,255,255,0.7); line-height: 1.8; margin-bottom: 16px; }
+        .card p:last-child { margin-bottom: 0; }
+
+        .feature-list {
+            list-style: none; margin: 20px 0;
+        }
+        .feature-list li {
+            display: flex; align-items: flex-start; gap: 14px;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            color: rgba(255,255,255,0.85);
+        }
+        .feature-list li:last-child { border-bottom: none; }
+        .feature-list li i {
+            color: #00d4ff; font-size: 14px; margin-top: 4px;
+        }
+        .feature-list li strong { color: #fff; }
+
+        .tech-badges {
+            display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px;
+        }
+        .tech-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 18px; border-radius: 30px;
+            font-size: 14px; font-weight: 600;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(123, 47, 247, 0.1));
+            border: 1px solid rgba(0, 212, 255, 0.25);
+            color: #00d4ff;
+            transition: all 0.3s;
+        }
+        .tech-badge:hover {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.25), rgba(123, 47, 247, 0.15));
+            transform: translateY(-2px);
+        }
+
+        .cta-section {
+            text-align: center; padding: 40px 0;
+            margin-top: 20px;
+        }
+        .cta-section a {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: linear-gradient(135deg, #00d4ff 0%, #7b2ff7 100%);
+            color: #fff; padding: 18px 36px; border-radius: 14px;
+            text-decoration: none; font-weight: 700; font-size: 16px;
+            transition: all 0.3s;
+            box-shadow: 0 8px 32px rgba(123, 47, 247, 0.4);
+        }
+        .cta-section a:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px rgba(123, 47, 247, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 16px 20px; flex-wrap: wrap; gap: 16px; }
+            .page-title { font-size: 32px; }
+            .container { padding: 40px 16px; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <span class="logo"><i class="fa-solid fa-shield-halved"></i> SmartSecure AI</span>
+        <div>
+            <a href="/">Home</a>
+            <a href="/about" class="active">About</a>
+            <a href="/predict">Predict</a>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/contact">Contact</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">About SmartSecure AI</h1>
+            <p class="page-sub">An intelligent insurance fraud detection system designed to help insurers and claims adjusters identify suspicious claims quickly and accurately.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon cyan">
+                <i class="fa-solid fa-bullseye"></i>
+            </div>
+            <h2>Our Mission</h2>
+            <p>We aim to reduce insurance fraud losses by leveraging cutting-edge machine learning to analyze claim patterns, detect anomalies, and flag high-risk cases for investigation — all in real time.</p>
+            <p>Our goal is to protect insurers while ensuring legitimate claims are processed faster, creating a fair and efficient insurance ecosystem.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon green">
+                <i class="fa-solid fa-building-shield"></i>
+            </div>
+            <h2>About The Company</h2>
+            <p>SmartSecure AI is a focused analytics company building practical AI solutions for insurance operations. We specialize in fraud detection, risk scoring, and explainable decision support for claims teams.</p>
+            <p>Our platform combines domain knowledge with machine learning so insurers can investigate suspicious claims earlier, reduce leakage, and improve customer trust through consistent claim handling.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon purple">
+                <i class="fa-solid fa-gears"></i>
+            </div>
+            <h2>How It Works</h2>
+            <p>Our system uses a trained Random Forest model that analyzes 8 key claim features to determine fraud probability:</p>
+            <ul class="feature-list">
+                <li>
+                    <i class="fa-solid fa-check"></i>
+                    <span><strong>Months as Customer</strong> — Tenure with the insurer indicates relationship stability</span>
+                </li>
+                <li>
+                    <i class="fa-solid fa-check"></i>
+                    <span><strong>Age</strong> — Policyholder age helps identify demographic patterns</span>
+                </li>
+                <li>
+                    <i class="fa-solid fa-check"></i>
+                    <span><strong>Policy Annual Premium</strong> — Yearly premium amount for coverage assessment</span>
+                </li>
+                <li>
+                    <i class="fa-solid fa-check"></i>
+                    <span><strong>Umbrella Limit</strong> — Additional coverage limit indicates policy scope</span>
+                </li>
+                <li>
+                    <i class="fa-solid fa-check"></i>
+                    <span><strong>Total Claim Amount</strong> — Overall claim value for ratio analysis</span>
+                </li>
+                <li>
+                    <i class="fa-solid fa-check"></i>
+                    <span><strong>Injury, Property & Vehicle Claims</strong> — Breakdown by claim type reveals patterns</span>
+                </li>
+            </ul>
+            <p>The model outputs a fraud probability score (0–100%). Claims above 70% are flagged as high risk and recommended for immediate investigation.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon pink">
+                <i class="fa-solid fa-microchip"></i>
+            </div>
+            <h2>Technology Stack</h2>
+            <p>Built with industry-standard tools for reliability, accuracy, and scalability:</p>
+            <div class="tech-badges">
+                <span class="tech-badge"><i class="fa-brands fa-python"></i> Python</span>
+                <span class="tech-badge"><i class="fa-solid fa-flask"></i> Flask</span>
+                <span class="tech-badge"><i class="fa-solid fa-brain"></i> Scikit-learn</span>
+                <span class="tech-badge"><i class="fa-solid fa-rocket"></i> XGBoost</span>
+                <span class="tech-badge"><i class="fa-solid fa-tree"></i> Random Forest</span>
+                <span class="tech-badge"><i class="fa-solid fa-balance-scale"></i> SMOTE</span>
+                <span class="tech-badge"><i class="fa-solid fa-file-pdf"></i> ReportLab</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-icon green">
+                <i class="fa-solid fa-star"></i>
+            </div>
+            <h2>Key Features</h2>
+            <ul class="feature-list">
+                <li>
+                    <i class="fa-solid fa-bolt"></i>
+                    <span><strong>Real-time Scoring</strong> — Instant fraud probability scoring for any claim</span>
+                </li>
+                <li>
+                    <i class="fa-solid fa-lightbulb"></i>
+                    <span><strong>Explainable AI</strong> — Transparent insights showing why a claim is flagged</span>
+                </li>
+                <li>
+                    <i class="fa-solid fa-file-pdf"></i>
+                    <span><strong>PDF Reports</strong> — Professional documentation for records and audits</span>
+                </li>
+                <li>
+                    <i class="fa-solid fa-user-secret"></i>
+                    <span><strong>Investigation Workflow</strong> — Raise cases directly from the dashboard</span>
+                </li>
+                <li>
+                    <i class="fa-solid fa-mobile-screen"></i>
+                    <span><strong>Responsive Design</strong> — Beautiful interface on any device</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="cta-section">
+            <a href="/predict">
+                <i class="fa-solid fa-magnifying-glass-chart"></i> Try Fraud Analysis Now
+            </a>
+        </div>
+    </div>
+</body>
+</html>

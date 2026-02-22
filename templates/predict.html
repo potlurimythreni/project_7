@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Predict - SmartSecure AI Fraud Detection</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            min-height: 100vh; color: #e8eef4;
+            background-attachment: fixed;
+        }
+        body::before {
+            content: '';
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at 20% 20%, rgba(120, 0, 255, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 60%, rgba(255, 0, 128, 0.08) 0%, transparent 40%);
+            pointer-events: none; z-index: 0;
+        }
+        nav {
+            position: relative; z-index: 10;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 48px;
+            background: linear-gradient(135deg, rgba(15, 12, 41, 0.95) 0%, rgba(48, 43, 99, 0.9) 100%);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+        nav .logo {
+            font-size: 24px; font-weight: 800;
+            background: linear-gradient(135deg, #00d4ff, #7b2ff7, #f107a3);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        nav a { color: rgba(255,255,255,0.7); text-decoration: none; margin-left: 32px; font-weight: 600; transition: 0.3s; }
+        nav a:hover { color: #00d4ff; text-shadow: 0 0 20px rgba(0, 212, 255, 0.5); }
+        nav a.active { color: #00d4ff; }
+        
+        .container { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 48px 24px; }
+        
+        .card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border-radius: 28px; padding: 48px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+        }
+        .card h2 {
+            font-size: 32px; margin-bottom: 12px; color: #fff;
+            display: flex; align-items: center; gap: 14px; font-weight: 800;
+        }
+        .card h2 i {
+            background: linear-gradient(135deg, #00d4ff, #7b2ff7);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .card > p { color: rgba(255,255,255,0.6); margin-bottom: 36px; font-size: 16px; }
+        
+        .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+        
+        .form-group { position: relative; }
+        .form-group label {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 14px; color: rgba(255,255,255,0.9); margin-bottom: 12px; font-weight: 600;
+        }
+        .form-group label i {
+            font-size: 16px;
+            background: linear-gradient(135deg, #00d4ff, #7b2ff7);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .form-group input {
+            width: 100%; padding: 18px 22px; border-radius: 16px;
+            border: 2px solid transparent;
+            background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%);
+            color: #fff; font-size: 16px; font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .form-group input::placeholder { color: rgba(255,255,255,0.4); }
+        .form-group input:focus {
+            outline: none;
+            border-color: #00d4ff;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(123, 47, 247, 0.05) 100%);
+            box-shadow: 0 0 0 4px rgba(0, 212, 255, 0.2), 0 0 30px rgba(0, 212, 255, 0.15);
+        }
+        .form-group input:hover {
+            border-color: rgba(0, 212, 255, 0.5);
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+        }
+        
+        .rupee-hint {
+            font-size: 12px; color: rgba(0, 212, 255, 0.7); margin-top: 8px;
+            display: flex; align-items: center; gap: 4px;
+        }
+        
+        .btn {
+            padding: 20px 48px; border-radius: 16px; border: none; font-weight: 700;
+            font-size: 17px; cursor: pointer; transition: all 0.3s ease;
+            display: inline-flex; align-items: center; gap: 12px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #00d4ff 0%, #7b2ff7 50%, #f107a3 100%);
+            color: #fff;
+            box-shadow: 0 8px 32px rgba(123, 47, 247, 0.4);
+        }
+        .btn-primary:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 16px 48px rgba(123, 47, 247, 0.5), 0 0 40px rgba(0, 212, 255, 0.3);
+        }
+        .btn-primary:active { transform: translateY(-2px) scale(1); }
+        
+        .result-section { display: none; margin-top: 40px; animation: fadeIn 0.6s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+        
+        .risk-badge { padding: 12px 24px; border-radius: 14px; font-weight: 700; display: inline-block; margin-top: 14px; font-size: 15px; }
+        
+        .input-icon-wrap {
+            position: relative;
+        }
+        .input-icon-wrap .input-icon {
+            position: absolute; right: 18px; top: 50%; transform: translateY(-50%);
+            color: rgba(0, 212, 255, 0.5); font-size: 18px;
+        }
+        
+        @media (max-width: 768px) {
+            .form-grid { grid-template-columns: 1fr; }
+            nav { padding: 16px 20px; flex-wrap: wrap; gap: 16px; }
+            .card { padding: 28px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <span class="logo"><i class="fa-solid fa-shield-halved"></i> SmartSecure AI</span>
+        <div>
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/predict" class="active">Predict</a>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/contact">Contact</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <h2><i class="fa-solid fa-magnifying-glass-chart"></i> Insurance Fraud Analysis</h2>
+            <p>Enter claim details below. All monetary values in Indian Rupees (Rs.).</p>
+            {% if error %}
+                <div style="margin: 0 0 20px; padding: 14px 16px; border-radius: 10px; background: rgba(239, 68, 68, 0.16); border: 1px solid rgba(239, 68, 68, 0.45); color: #fecaca;">
+                    <i class="fa-solid fa-triangle-exclamation"></i> {{ error }}
+                </div>
+            {% endif %}
+
+            <form action="/analyze" method="POST">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label><i class="fa-solid fa-calendar-days"></i> Months as Customer</label>
+                        <div class="input-icon-wrap">
+                            <input type="number" name="months_as_customer" placeholder="e.g. 24" value="{{ (form_data or {}).get('months_as_customer', '') }}" required>
+                            <span class="input-icon"><i class="fa-regular fa-clock"></i></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fa-solid fa-user"></i> Customer Age</label>
+                        <div class="input-icon-wrap">
+                            <input type="number" name="age" placeholder="e.g. 35" value="{{ (form_data or {}).get('age', '') }}" required>
+                            <span class="input-icon"><i class="fa-solid fa-birthday-cake"></i></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fa-solid fa-indian-rupee-sign"></i> Policy Annual Premium</label>
+                        <div class="input-icon-wrap">
+                            <input type="number" name="policy_annual_premium" placeholder="e.g. 15000" value="{{ (form_data or {}).get('policy_annual_premium', '') }}" required>
+                            <span class="input-icon"><i class="fa-solid fa-money-bill-wave"></i></span>
+                        </div>
+                        <span class="rupee-hint"><i class="fa-solid fa-circle-info"></i> Amount in Indian Rupees</span>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fa-solid fa-umbrella"></i> Umbrella Limit</label>
+                        <div class="input-icon-wrap">
+                            <input type="number" name="umbrella_limit" placeholder="e.g. 500000" value="{{ (form_data or {}).get('umbrella_limit', '') }}" required>
+                            <span class="input-icon"><i class="fa-solid fa-shield"></i></span>
+                        </div>
+                        <span class="rupee-hint"><i class="fa-solid fa-circle-info"></i> Amount in Indian Rupees</span>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fa-solid fa-file-invoice-dollar"></i> Total Claim Amount</label>
+                        <div class="input-icon-wrap">
+                            <input type="number" name="total_claim_amount" placeholder="e.g. 250000" value="{{ (form_data or {}).get('total_claim_amount', '') }}" required>
+                            <span class="input-icon"><i class="fa-solid fa-coins"></i></span>
+                        </div>
+                        <span class="rupee-hint"><i class="fa-solid fa-circle-info"></i> Amount in Indian Rupees</span>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fa-solid fa-user-injured"></i> Injury Claim</label>
+                        <div class="input-icon-wrap">
+                            <input type="number" name="injury_claim" placeholder="e.g. 50000" value="{{ (form_data or {}).get('injury_claim', '') }}" required>
+                            <span class="input-icon"><i class="fa-solid fa-bandage"></i></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fa-solid fa-house-crack"></i> Property Claim</label>
+                        <div class="input-icon-wrap">
+                            <input type="number" name="property_claim" placeholder="e.g. 100000" value="{{ (form_data or {}).get('property_claim', '') }}" required>
+                            <span class="input-icon"><i class="fa-solid fa-building"></i></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fa-solid fa-car-burst"></i> Vehicle Claim</label>
+                        <div class="input-icon-wrap">
+                            <input type="number" name="vehicle_claim" placeholder="e.g. 100000" value="{{ (form_data or {}).get('vehicle_claim', '') }}" required>
+                            <span class="input-icon"><i class="fa-solid fa-car"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 40px;">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa-solid fa-magnifying-glass"></i> Analyze Claim
+                    </button>
+                </div>
+            </form>
+
+            {% if probability is defined %}
+                {% include 'dashboard_section.html' %}
+            {% endif %}
+    <script>
+        window.addEventListener('load', function(){
+            const probability = {{ probability|default('null') }};
+            if (probability !== null) {
+                const section = document.getElementById('dashboardSection');
+                const gaugeArc = document.getElementById('gaugeArcFg');
+                const gaugeNeedle = document.getElementById('gaugeNeedle');
+                const gaugeValue = document.getElementById('gaugeValue');
+                const badge = document.getElementById('riskBadge');
+                const prob = Number(probability);
+
+                if (section && gaugeArc && gaugeNeedle && gaugeValue) {
+                    section.style.display = 'block';
+                    setTimeout(()=>{
+                        const length = gaugeArc.getTotalLength();
+                        gaugeArc.style.strokeDasharray = length;
+                        gaugeArc.style.transition = 'stroke-dashoffset 1s ease-in-out, stroke 0.6s';
+                        gaugeArc.style.strokeDashoffset = length * (1 - prob/100);
+
+                        const cx = 100, cy = 100, r = 72;
+                        const angleDeg = 180 * (1 - prob/100);
+                        const angleRad = angleDeg * Math.PI / 180;
+                        const x2 = cx + r * Math.cos(angleRad);
+                        const y2 = cy - r * Math.sin(angleRad);
+                        gaugeNeedle.setAttribute('x2', x2);
+                        gaugeNeedle.setAttribute('y2', y2);
+                        gaugeNeedle.style.transition = 'x2 0.9s ease-in-out, y2 0.9s ease-in-out, stroke 0.6s';
+
+                        gaugeValue.innerHTML = prob + '%';
+
+                        if (prob < 40) {
+                            badge.style.background = 'rgba(34, 197, 94, 0.25)';
+                            badge.style.color = '#22c55e';
+                            badge.innerHTML = 'Low Risk';
+                        } else if (prob < 70) {
+                            badge.style.background = 'rgba(245, 158, 11, 0.25)';
+                            badge.style.color = '#f59e0b';
+                            badge.innerHTML = 'Medium Risk';
+                        } else {
+                            badge.style.background = 'rgba(239, 68, 68, 0.25)';
+                            badge.style.color = '#ef4444';
+                            badge.innerHTML = 'High Risk - Investigation Required';
+                        }
+
+                        const color = prob < 40 ? '#22c55e' : (prob < 70 ? '#f59e0b' : '#ef4444');
+                        gaugeArc.style.stroke = color;
+                        gaugeNeedle.style.stroke = color;
+
+                        section.scrollIntoView({ behavior: 'smooth' });
+                    }, 150);
+                }
+            }
+        });
+    </script>
+        </div>
+    </div>
+
+</body>
+</html>

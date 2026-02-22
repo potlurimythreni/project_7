@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - SmartSecure AI Fraud Detection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            min-height: 100vh; color: #e8eef4; background-attachment: fixed;
+        }
+        nav {
+            position: sticky; top: 0; z-index: 100;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 48px;
+            background: linear-gradient(135deg, rgba(15, 12, 41, 0.95) 0%, rgba(48, 43, 99, 0.9) 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        nav .logo {
+            font-size: 24px; font-weight: 800;
+            background: linear-gradient(135deg, #00d4ff, #7b2ff7, #f107a3);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        nav a { color: rgba(255,255,255,0.7); text-decoration: none; margin-left: 32px; font-weight: 600; }
+        nav a.active, nav a:hover { color: #00d4ff; }
+        .container { max-width: 920px; margin: 0 auto; padding: 56px 20px; }
+        .title { font-size: 40px; font-weight: 800; margin-bottom: 10px; }
+        .sub { color: rgba(255,255,255,0.7); margin-bottom: 28px; }
+        .card {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 18px;
+            padding: 24px;
+            margin-bottom: 18px;
+        }
+        .card h3 { margin-bottom: 12px; font-size: 22px; }
+        .row { margin: 8px 0; color: rgba(255,255,255,0.88); }
+        .row a { color: #00d4ff; text-decoration: none; }
+        .row a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <nav>
+        <span class="logo"><i class="fa-solid fa-shield-halved"></i> SmartSecure AI</span>
+        <div>
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/predict">Predict</a>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/contact" class="active">Contact</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="title">Contact Us</h1>
+        <p class="sub">Reach our team for support, implementation help, and partnership requests.</p>
+
+        <div class="card">
+            <h3>Mythreni</h3>
+            <div class="row"><strong>Role:</strong> Technical Lead</div>
+            <div class="row"><strong>Email:</strong> <a href="mailto:mythreni@smartsecure-ai.com">mythreni@smartsecure-ai.com</a></div>
+        </div>
+
+        <div class="card">
+            <h3>Sivamani </h3>
+            <div class="row"><strong>Role:</strong> Business and Partnerships</div>
+            <div class="row"><strong>Email:</strong> <a href="mailto:sivamani@smartsecure-ai.com">sivamani@smartsecure-ai.com</a></div>
+        </div>
+
+        <div class="card">
+            <h3>Company Info</h3>
+            <div class="row">SmartSecure AI provides fraud analytics for insurance claims using explainable machine learning.</div>
+            <div class="row">Office: Bapatla, Andhra Pradesh, India</div>
+            <div class="row">Support Hours: Monday to Saturday, 9:00 AM to 6:00 PM IST</div>
+        </div>
+    </div>
+</body>
+</html>
