@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartSecure AI - Insurance Fraud Detection System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        
+        body {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            min-height: 100vh; color: #e8eef4;
+            background-attachment: fixed;
+        }
+        body::before {
+            content: '';
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at 20% 30%, rgba(0, 212, 255, 0.12) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 70%, rgba(123, 47, 247, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 50% 50%, rgba(241, 7, 163, 0.08) 0%, transparent 60%);
+            pointer-events: none; z-index: 0;
+        }
+
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 48px;
+            background: linear-gradient(135deg, rgba(15, 12, 41, 0.95) 0%, rgba(48, 43, 99, 0.9) 100%);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+        nav .logo {
+            font-size: 24px; font-weight: 800;
+            background: linear-gradient(135deg, #00d4ff, #7b2ff7, #f107a3);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex; align-items: center; gap: 10px;
+        }
+        nav .logo i {
+            background: linear-gradient(135deg, #00d4ff, #7b2ff7);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        nav .nav-links a {
+            color: rgba(255,255,255,0.7); text-decoration: none;
+            margin-left: 32px; font-weight: 600; transition: 0.3s;
+            position: relative;
+        }
+        nav .nav-links a:hover { color: #00d4ff; text-shadow: 0 0 20px rgba(0, 212, 255, 0.5); }
+        nav .nav-links a.active { color: #00d4ff; }
+
+        .hero {
+            position: relative; z-index: 1;
+            text-align: center;
+            padding: 180px 20px 100px 20px;
+            max-width: 1000px; margin: 0 auto;
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(123, 47, 247, 0.1));
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            padding: 10px 20px; border-radius: 30px;
+            font-size: 14px; font-weight: 600; color: #00d4ff;
+            margin-bottom: 28px;
+        }
+        .hero-badge i { font-size: 12px; }
+        .hero h1 {
+            font-size: 56px; font-weight: 800; line-height: 1.15;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.85) 50%, #00d4ff 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            font-size: 18px; line-height: 1.8;
+            color: rgba(255,255,255,0.65);
+            max-width: 700px; margin: 0 auto 40px auto;
+        }
+        .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 18px 36px; border-radius: 14px;
+            text-decoration: none; font-weight: 700; font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #00d4ff 0%, #7b2ff7 50%, #f107a3 100%);
+            color: #fff;
+            box-shadow: 0 8px 32px rgba(123, 47, 247, 0.4);
+        }
+        .btn-primary:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 16px 48px rgba(123, 47, 247, 0.5), 0 0 40px rgba(0, 212, 255, 0.3);
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,0.08);
+            color: #fff; border: 1px solid rgba(255,255,255,0.2);
+        }
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: rgba(0, 212, 255, 0.5);
+        }
+
+        .features {
+            position: relative; z-index: 1;
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 24px; max-width: 1200px; margin: 0 auto;
+            padding: 0 24px 80px 24px;
+        }
+        .feature-box {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.03) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 36px 28px; border-radius: 24px;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            transition: all 0.4s ease;
+        }
+        .feature-box:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            border-color: rgba(0, 212, 255, 0.3);
+        }
+        .feature-icon {
+            width: 72px; height: 72px; border-radius: 20px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 28px; margin: 0 auto 24px auto;
+        }
+        .feature-icon.cyan { background: linear-gradient(135deg, #0066ff, #00d4ff); color: #fff; }
+        .feature-icon.purple { background: linear-gradient(135deg, #7b2ff7, #a855f7); color: #fff; }
+        .feature-icon.pink { background: linear-gradient(135deg, #f107a3, #ff6b9d); color: #fff; }
+        .feature-box h3 {
+            font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 14px;
+        }
+        .feature-box p { color: rgba(255,255,255,0.6); line-height: 1.7; font-size: 15px; }
+
+        .stats {
+            position: relative; z-index: 1;
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 24px; max-width: 900px; margin: 0 auto;
+            padding: 60px 24px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.05) 0%, rgba(123, 47, 247, 0.05) 100%);
+            border-top: 1px solid rgba(255,255,255,0.08);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .stat-box { text-align: center; }
+        .stat-box h2 {
+            font-size: 48px; font-weight: 800;
+            background: linear-gradient(135deg, #00d4ff, #7b2ff7);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        .stat-box p { color: rgba(255,255,255,0.6); font-size: 15px; font-weight: 500; }
+
+        .footer-links {
+            position: relative; z-index: 1;
+            text-align: center; padding: 60px 24px;
+        }
+        .footer-links p { color: rgba(255,255,255,0.5); font-size: 16px; }
+        .footer-links a {
+            color: #00d4ff; text-decoration: none; font-weight: 600;
+            transition: 0.3s; margin: 0 10px;
+        }
+        .footer-links a:hover { text-shadow: 0 0 20px rgba(0, 212, 255, 0.5); }
+
+        @media (max-width: 900px) {
+            .features { grid-template-columns: 1fr; }
+            .stats { grid-template-columns: 1fr; gap: 40px; }
+            .hero h1 { font-size: 36px; }
+            nav { padding: 16px 20px; flex-wrap: wrap; gap: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <span class="logo"><i class="fa-solid fa-shield-halved"></i> SmartSecure AI</span>
+        <div class="nav-links">
+            <a href="/" class="active">Home</a>
+            <a href="/about">About</a>
+            <a href="/predict">Predict</a>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/contact">Contact</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-badge">
+            <i class="fa-solid fa-sparkles"></i>
+            AI-Powered Fraud Detection
+        </div>
+        <h1>Detect Insurance Fraud Instantly with AI</h1>
+        <p>
+            SmartSecure AI analyzes insurance claim data using advanced machine learning 
+            to detect fraudulent activities, reduce losses, and accelerate legitimate claims processing.
+            Get instant fraud probability scores with detailed PDF reports.
+        </p>
+        <div class="hero-btns">
+            <a href="/predict" class="btn btn-primary">
+                <i class="fa-solid fa-magnifying-glass-chart"></i> Start Analysis
+            </a>
+            <a href="/about" class="btn btn-secondary">
+                <i class="fa-solid fa-circle-info"></i> Learn More
+            </a>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="feature-box">
+            <div class="feature-icon cyan">
+                <i class="fa-solid fa-brain"></i>
+            </div>
+            <h3>Smart Risk Analysis</h3>
+            <p>Detect suspicious claim patterns using our trained Random Forest model. The system evaluates 8 key features including claim amounts, premiums, and customer tenure.</p>
+        </div>
+
+        <div class="feature-box">
+            <div class="feature-icon purple">
+                <i class="fa-solid fa-bolt"></i>
+            </div>
+            <h3>Real-Time Prediction</h3>
+            <p>Get instant fraud probability scores (0–100%). High-risk claims (≥70%) are automatically flagged for investigation while low-risk claims are fast-tracked.</p>
+        </div>
+
+        <div class="feature-box">
+            <div class="feature-icon pink">
+                <i class="fa-solid fa-file-pdf"></i>
+            </div>
+            <h3>PDF Reports & Cases</h3>
+            <p>Download detailed PDF reports with risk assessment, claim details, and AI insights. Raise investigation cases directly from the dashboard for high-risk claims.</p>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="stat-box">
+            <h2>95%</h2>
+            <p>Detection Accuracy</p>
+        </div>
+        <div class="stat-box">
+            <h2>8</h2>
+            <p>Key Features Analyzed</p>
+        </div>
+        <div class="stat-box">
+            <h2>Instant</h2>
+            <p>Results & PDF Export</p>
+        </div>
+    </section>
+
+    <section class="footer-links">
+        <p>
+            <a href="/about"><i class="fa-solid fa-arrow-right"></i> How it works</a>
+            <span style="color: rgba(255,255,255,0.3);">|</span>
+            <a href="/contact"><i class="fa-solid fa-envelope"></i> Contact us</a>
+            for support or partnerships
+        </p>
+    </section>
+</body>
+</html>
